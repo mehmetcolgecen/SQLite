@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/USER/Desktop/SQLite kayıtları/chinook.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3862"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,6:mainalbums"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="albums" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="61"/><column index="2" value="300"/><column index="3" value="59"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">select Name from tracks; 
+
+select Name, Composer from tracks; --track tablosundan iki sütun çektik
+
+SELECT * FROM tracks; --satırdaki tüm değerleri almak için
+
+-- DISTINCT sadece unique değerleri seçmek aşağıdaki gibi için kullanılır
+select Composer from tracks;
+SELECT DISTINCT Composer FROM tracks;
+SELECT DISTINCT AlbumId, MediaTypeId FROM tracks; --BURADA HER İKİ HÜCRE DE, YANİ HER SATIR DEĞERLERİ AYRI AYR UNİQUE'DİR.
+
+--WHERE condition için kullanılır. kıyaslama için BETWEEN, LIKE VE IN ifadeleri ile =, &lt;, &gt; ,&lt;&gt; gibi işaretleri kullanılabilir
+SELECT name,Composer FROM tracks WHERE Composer = &quot;Jimi Hendrix&quot;;
+SELECT name FROM tracks WHERE Composer = &quot;Jimi Hendrix&quot;;
+
+SELECT * FROM invoices WHERE total &gt; 10;
+
+-- LIMIT --&gt; pandas'taki df.head() gibi
+SELECT * FROM invoices WHERE total &gt; 10 LIMIT 4;
+
+-- ORDER BY --&gt; SIRALAMA(sort) için DESC ve ASC parametreleri ile kullanılabilir.(ASC(artan sıralama) default)
+SELECT * 
+FROM invoices
+WHERE total &gt; 10
+ORDER BY total DESC;
+
+-- AND, OR, NOT operators WHERE ile kullanılırlar. condition sayısını artırmak için.
+SELECT * 
+FROM invoices
+WHERE NOT BillingCountry = &quot;USA&quot; 
+order by total;
+
+-- BETWEEN operatörü iki değer arasındaki veriler içindir. AND ile kullanılır. 
+-- tersi işlem için NOT BETWEEN de kullanılabilinir
+-- daha çok tarih işlemleri için kullanılır. tarihlerin &quot; &quot; içinde olmasına dikkat et!!!
+-- !!!! BETWEEN tarih dışında bir veri için kullanılırsa her iki karşılaştırma verisini içerir ancak
+-- tarih değeri için ilk girilen tarih sorguya alınırken son değer sorguya alınmaz. python range() gibi..
+SELECT * FROM invoices
+WHERE InvoiceDate BETWEEN &quot;2009-01-01&quot; AND &quot;2011-12-31&quot;
+ORDER BY InvoiceDate DESC;
+
+-- IN --&gt; satırlarımız içerisinde belirttiğimiz değer varmı diye bakmak için WHERE ile birlikte kullanılır.
+-- ters işlem için NOT IN kullanılır.
+SELECT FirstName, LastName, Country FROM customers where Country IN (&quot;Belgium&quot;, &quot;Norway&quot;, &quot;Canada&quot;, &quot;USA&quot;);
+
+-- LIKE --&gt; içinde benzer bir pattern var mı diye kontrol etmek için
+--   %   --&gt; 0 or more (any characters)
+--   _   --&gt; 1 (any character)
+
+SELECT * FROM tracks WHERE Composer LIKE &quot;%Bach%&quot;;
+
+SELECT * FROM invoices WHERE BillingCountry LIKE &quot;%AN_&quot;;
+
+
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
